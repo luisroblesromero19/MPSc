@@ -143,7 +143,7 @@ class Calculadora:
         # Perfil requerido: edad ideal según proyecto, rol y minutos proyectados
         sc["perfil_jugador"] = self.perfil.calcular(
             jugador.edad, "titular_indiscutible",
-            club.pct_minutos_proyectados * club.pct_minutos_proyectados / 100,
+            club.pct_minutos_proyectados,
             100.0,
         )
 
@@ -189,7 +189,7 @@ class Calculadora:
             "fisico_salud":        compatibilidad_modulo(sj["fisico_salud"],        sc["fisico_salud"]),
             "adaptacion":          compatibilidad_modulo(sj["adaptacion"],          sc["adaptacion"]),
             "zonas_presencia":     (sj["zonas_presencia"] - 1) / 9,
-            "modelo_juego":        sj["modelo_juego"] / 10,
+            "modelo_juego":        (sj["modelo_juego"] - 1) / 9,
             "viabilidad":          compatibilidad_modulo(sj["viabilidad"],          sc["viabilidad"]),
         }
 

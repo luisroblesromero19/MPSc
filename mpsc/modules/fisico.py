@@ -38,10 +38,15 @@ class ModuloFisico:
         if minutos_posibles <= 0:
             return 5.0
         pct = (minutos_jugados / minutos_posibles) * 100
-        if 70 <= pct <= 85:  return 10.0
-        if 86 <= pct <= 92:  return 8.0
-        if pct > 92:         return 6.0
-        return 5.0
+        if pct < 60:
+            return 5.0
+        if pct < 70:
+            return round(5.0 + (pct - 60) * 0.5, 2)
+        if pct <= 85:
+            return 10.0
+        if pct <= 92:
+            return 8.0
+        return 6.0
 
     def penalizacion_altitud(self, alt_origen: float, alt_destino: float) -> float:
         diff = abs(alt_destino - alt_origen)

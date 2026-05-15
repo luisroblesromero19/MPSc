@@ -1,0 +1,25 @@
+# MPSc — Dependencias del proyecto
+# Instalar con: pip install -r requirements.txt
+
+# Motor de cálculo
+# (librería estándar de Python, sin dependencias externas)
+
+# Persistencia MySQL
+SQLAlchemy>=2.0
+pymysql>=1.1
+python-dotenv>=1.0
+
+# Migraciones
+alembic>=1.13
+
+# Criptografía (requerido por pymysql con caching_sha2_password)
+cryptography>=42.0
+
+# Web (opcional, para webapp.py)
+# (usa http.server de la stdlib, sin dependencias externas)
+
+# Calibración FBref (opcional, para utils/calibrador.py)
+# pandas>=2.0
+
+# Reportes HTML
+# (usa Chart.js vía CDN, sin dependencias externas)
