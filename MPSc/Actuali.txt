@@ -1,0 +1,220 @@
+﻿Quiero refactorizar mi proyecto MPSc (Modelo Predictivo de Scouting) para comenzar la transición desde una aplicación de cálculo puntual hacia una plataforma de scouting con almacenamiento histórico en MySQL.
+
+
+CONTEXTO ACTUAL
+---------------
+El proyecto actualmente:
+- Está escrito en Python
+- Tiene arquitectura modular
+- Tiene modelos Jugador, Club y Resultado
+- Calcula scores de compatibilidad entre jugador y club
+- Usa una UI web y/o formularios para ingresar datos manualmente
+- Actualmente NO usa persistencia histórica
+- Los datos viven temporalmente durante la ejecución
+
+
+OBJETIVO DE ESTA PRIMERA FASE
+-----------------------------
+Implementar persistencia MySQL para jugadores y temporadas, comenzando por un CRUD completo de jugadores.
+
+
+IMPORTANTE:
+NO modificar todavía la lógica matemática del sistema.
+NO eliminar funcionalidades existentes.
+La prioridad es integrar persistencia de datos manteniendo compatibilidad con el sistema actual.
+
+
+REQUERIMIENTOS TÉCNICOS
+-----------------------
+
+
+STACK:
+- Python
+- MySQL
+- SQLAlchemy ORM
+- Alembic para migraciones
+- Arquitectura limpia y desacoplada
+
+
+ESTRUCTURA ESPERADA
+-------------------
+
+
+Crear una estructura similar a:
+
+
+mpsc/
+├── database/
+│ ├── connection.py
+│ ├── models/
+│ │ ├── jugador_model.py
+│ │ ├── temporada_model.py
+│ │ └── __init__.py
+│ ├── repositories/
+│ │ ├── jugador_repository.py
+│ │ └── temporada_repository.py
+│ └── migrations/
+│
+├── services/
+│ ├── jugador_service.py
+│ └── temporada_service.py
+
+
+REQUERIMIENTOS DEL MODELO JUGADOR
+---------------------------------
+
+
+Crear una tabla principal "jugadores" con:
+
+
+- id
+- nombre
+- fecha_nacimiento
+- edad
+- pais_origen
+- ciudad_actual
+- idioma
+- experiencia_extranjero
+- valor_mercado
+- posicion_principal
+- created_at
+- updated_at
+
+
+REQUERIMIENTOS DEL HISTÓRICO
+----------------------------
+
+
+Crear una tabla "temporadas_jugador" relacionada con jugadores.
+
+
+Cada temporada debe almacenar:
+
+
+- id
+- jugador_id (FK)
+- temporada
+- club_actual
+- liga
+- posicion_tabla
+- total_equipos_liga
+- tiene_copa
+- tiene_internacional
+- sistema_tactico_club
+- estilo_ofensivo
+- estilo_defensivo
+- estilo_transicion
+- altitud_ciudad
+- minutos_jugados
+- minutos_posibles
+- posicion
+- rol
+- estadisticas_json
+- num_lesiones
+- tipo_lesion
+- semanas_baja_promedio
+- zonas_json
+- sofascore_jugador_raw
+- stats_club_origen_raw
+- created_at
+
+
+IMPORTANTE:
+- estadisticas_json debe usar tipo JSON
+- zonas_json debe usar tipo JSON
+- NO guardar scores calculados todavía
+- El objetivo es guardar datos crudos históricos
+
+
+CRUD NECESARIO
+---------------
+
+
+Implementar:
+
+
+1. Crear jugador
+2. Obtener jugador por ID
+3. Listar jugadores
+4. Actualizar jugador
+5. Eliminar jugador
+
+
+Y además:
+
+
+6. Agregar temporada a jugador
+7. Obtener histórico completo del jugador
+8. Obtener última temporada del jugador
+
+
+REQUERIMIENTOS DE IMPLEMENTACIÓN
+--------------------------------
+
+
+- Usar SQLAlchemy declarative
+- Usar relaciones ORM correctamente
+- Separar modelos ORM de lógica del dominio
+- Crear repositorios desacoplados
+- Crear servicios de negocio
+- Implementar manejo de errores
+- Crear archivo .env.example para conexión MySQL
+- Crear script inicializador de DB
+- Crear migraciones Alembic
+
+
+REQUERIMIENTOS IMPORTANTES
+--------------------------
+
+
+NO romper:
+- models/jugador.py existente
+- calculadora.py
+- módulos matemáticos actuales
+
+
+La persistencia debe convivir con el sistema actual.
+
+
+REQUERIMIENTO EXTRA IMPORTANTE
+------------------------------
+
+
+Crear funciones adaptadoras que permitan:
+
+
+ORM -> dataclass Jugador actual
+dataclass Jugador actual -> ORM
+
+
+para mantener compatibilidad con el motor de cálculo existente.
+
+
+SALIDA ESPERADA
+---------------
+
+
+Quiero:
+
+
+1. Código completo
+2. Estructura de carpetas
+3. Modelos ORM
+4. Repositorios
+5. Servicios
+6. Configuración MySQL
+7. Migraciones
+8. Ejemplos de uso
+9. Explicación de arquitectura
+10. Cómo ejecutar todo paso a paso
+
+
+IMPORTANTE:
+El código debe quedar listo para una segunda fase donde:
+- se almacenarán clubes
+- se harán consultas automáticas
+- se detectarán necesidades tácticas automáticamente
+- se harán búsquedas masivas de compatibilidad
+
+
+Priorizar escalabilidad y mantenibilidad.
